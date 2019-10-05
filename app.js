@@ -15,31 +15,56 @@ $(document).ready(function() {
     }
   ]
   $region=[];
+  $city=[];
+
   select.forEach(function (element,index) {
     for(region in element){
       $region.push(region)
-      console.log($region);
     }
   });
   $region.forEach(function (region) {
     $("#select1").append(`
       <option value="${region}">${region}</option>
     `);
-    console.log(region);
   });
 
-$("#select1").change(function(event) {
-  regionValue=$(this).val();
-});
-    // select.forEach(function (value,index) {
-    //   const option=document.createElement('option');
-    //   option.setAttribute("value",value[index]);
-    //   option.textContent=value;
-    //   $("select").append(option);
-    // });
-    // console.log(hello);
-
-
-
-  // console.log(select);
+function changeSelect1() {
+  $("#select1").change(function() {
+    $country=[];
+    $country1=[];
+    $country2=[];
+    regionValue=$(this).val();
+    console.log('reion-value',regionValue);
+    //index of selectedvalue in region array, because the array position would be the same in select array
+    $searchIndex = $region.indexOf(regionValue);
+    //using the index to find the whole array of region, e.g. region of asia
+    $searchedRegion = select[$searchIndex];
+    $country=Array.from(Object.values($searchedRegion));
+    $country.forEach(function (countryName,index) {
+      $countryValues=Object.values(countryName);
+      $countryValues.forEach(function (el,index) {
+        $country1.push(Object.keys(el))
+      })
+    })
+    console.log($country1);
+    $country1.forEach(function (el,index) {
+        $country2.push(...el)
+    })
+    console.log('country2',$country2);
+    $("#select2").html('');
+    $country2.forEach(function (item) {
+      $("#select2").append(`
+        <option value="${item}">${item}</option>
+      `)
+    })
+  });
+}
+function changeSelect2() {
+    $("#select2").change(function(event) {
+      countryValue=$(this).val();
+      console.log(countryValue);
+    });
+}
+changeSelect1()
+changeSelect2();
 });

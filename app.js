@@ -28,13 +28,14 @@ $(document).ready(function() {
     `);
   });
 
-function changeSelect1() {
+
   $("#select1").change(function() {
     $country=[];
     $country1=[];
     $country2=[];
     regionValue=$(this).val();
-    console.log('reion-value',regionValue);
+    console.log($region);
+    // console.log('reion-value',regionValue);
     //index of selectedvalue in region array, because the array position would be the same in select array
     $searchIndex = $region.indexOf(regionValue);
     //using the index to find the whole array of region, e.g. region of asia
@@ -46,11 +47,11 @@ function changeSelect1() {
         $country1.push(Object.keys(el))
       })
     })
-    console.log($country1);
+    // console.log($country1);
     $country1.forEach(function (el,index) {
         $country2.push(...el)
     })
-    console.log('country2',$country2);
+    // console.log('country2',$country2);
     $("#select2").html('');
     $country2.forEach(function (item) {
       $("#select2").append(`
@@ -58,13 +59,19 @@ function changeSelect1() {
       `)
     })
   });
-}
-function changeSelect2() {
-    $("#select2").change(function(event) {
-      countryValue=$(this).val();
-      console.log(countryValue);
-    });
-}
-changeSelect1()
-changeSelect2();
+
+//changing the 3rd selector
+$("#select2").change(function(event) {
+
+  $countryValueSelected=$(this).val();
+  $city1=[];
+  $country[0].forEach(function (el) {
+    $city.push(Array.from(Object.keys(el)))
+  })
+  // console.log($city.indexOf($countryValueSelected));
+  $city.forEach(function (addCity) {
+    $city1.push(...addCity);
+  })
+  console.log($city1);
+});
 });
